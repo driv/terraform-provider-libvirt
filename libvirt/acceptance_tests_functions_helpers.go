@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform/helper/resource"
+	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 	libvirt "github.com/libvirt/libvirt-go"
 	"github.com/libvirt/libvirt-go-xml"
@@ -30,14 +31,13 @@ func getResourceFromTerraformState(resourceName string, state *terraform.State) 
 }
 
 // test in all testacc that resource is destroyed
-func testaccCheckLibvirtDestroyResource(resourceName string, virConn libvirt.Connect) resource.TestCheckFunc {
+func testaccCheckLibvirtDestroyResource(resourceName string, provider schema.Provider) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		for _, rs := range s.RootModule().Resources {
 			if rs.Type != resourceName {
 				continue
 			}
-
-			_, err := virConn.LookupDomainByUUIDString(rs.Primary.ID)
+			_, err := provider.Meta().(*Client).libvirt.LookupDomainByUUIDString(rs.Primary.ID)
 			if err == nil {
 				return fmt.Errorf(
 					"Error waiting for resource (%s) to be destroyed: %s",

@@ -21,7 +21,7 @@ func TestAccLibvirtCloudInit_CreateCloudInitDiskAndUpdate(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
-		CheckDestroy: testaccCheckLibvirtDestroyResource("libvirt_cloudinit_disk", *testAccProvider.Meta().(*Client).libvirt),
+		CheckDestroy: testaccCheckLibvirtDestroyResource("libvirt_cloudinit_disk", *testAccProvider),
 		Steps: []resource.TestStep{
 			{
 				Config: fmt.Sprintf(`
@@ -107,7 +107,7 @@ func TestAccLibvirtCloudInit_ManuallyDestroyed(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
-		CheckDestroy: testaccCheckLibvirtDestroyResource("libvirt_cloudinit_disk", *testAccProvider.Meta().(*Client).libvirt),
+		CheckDestroy: testaccCheckLibvirtDestroyResource("libvirt_cloudinit_disk", *testAccProvider),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccCheckLibvirtCloudInitConfigBasic,

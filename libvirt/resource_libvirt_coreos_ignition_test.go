@@ -35,7 +35,7 @@ func TestAccLibvirtIgnition_Basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
-		CheckDestroy: testaccCheckLibvirtDestroyResource("libvirt_ignition", *testAccProvider.Meta().(*Client).libvirt),
+		CheckDestroy: testaccCheckLibvirtDestroyResource("libvirt_ignition", *testAccProvider),
 		Steps: []resource.TestStep{
 			{
 				Config: config,
